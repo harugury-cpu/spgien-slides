@@ -1,0 +1,273 @@
+{
+  "_meta": {
+    "canvas_w_pt": 720,
+    "canvas_h_pt": 405,
+    "margin_pt": 36,
+    "tolerance_pt": 2.5,
+    "emu_per_pt": 12700,
+    "source": "spigen_lib.py 측정값 기준 — 변경 시 spigen_lib.py와 동기화 필요"
+  },
+  "slide_base": {
+    "eyebrow": {
+      "x": 36,
+      "y": 36,
+      "w": 240,
+      "h": 16,
+      "font_size": 7,
+      "font_family": "AUTO",
+      "bold": true
+    },
+    "title": {
+      "x": 36,
+      "y": 54,
+      "w": 648,
+      "h": 40,
+      "font_size": 22,
+      "font_family": "AUTO",
+      "bold": true
+    }
+  },
+  "section_divider": {
+    "num": {
+      "x": 51,
+      "y": 103,
+      "w": 120,
+      "h": 100,
+      "font_size": 80,
+      "font_family": "Proxima Nova",
+      "bold": true
+    },
+    "label": {
+      "x": 178,
+      "y": 158,
+      "w": 100,
+      "h": 16,
+      "font_size": 14.5,
+      "font_family": "Proxima Nova",
+      "bold": false
+    },
+    "title": {
+      "x": 178,
+      "y": 174,
+      "w": 380,
+      "h": 64,
+      "font_size": 28,
+      "font_family": "Noto Sans",
+      "bold": true
+    }
+  },
+  "flow": {
+    "_layout": {
+      "x0": 54,
+      "y0": 132,
+      "total_w": 612,
+      "gap_le4": 12,
+      "gap_gt4": 8,
+      "_note": "n<=4: gap=12, n>4: gap=8 / cw=(total_w - gap*(n-1))/n / ch is dynamic"
+    },
+    "step": {
+      "rel_x": 0,
+      "rel_y": 0,
+      "h": 96
+    },
+    "sn": {
+      "rel_x": 8,
+      "rel_y": 8,
+      "w_shrink": 16,
+      "h": 9,
+      "font_size": 7,
+      "font_family": "Proxima Nova",
+      "bold": false
+    },
+    "st": {
+      "rel_x": 8,
+      "rel_y": 18,
+      "w_shrink": 16,
+      "h": 13,
+      "font_size": 9.5,
+      "font_family": "Noto Sans",
+      "bold": true
+    },
+    "sv": {
+      "rel_x": 8,
+      "w_shrink": 16,
+      "h": 10,
+      "font_size": 7,
+      "font_family": "Noto Sans",
+      "bold": false
+    },
+    "sd": {
+      "rel_x": 8,
+      "rel_y": 42,
+      "w_shrink": 16,
+      "h": 17,
+      "font_size": 7,
+      "font_family": "Noto Sans",
+      "bold": false
+    },
+    "sep": {
+      "rel_x": 8,
+      "rel_y": 59,
+      "w_shrink": 16,
+      "h": 0.5
+    },
+    "costl": {
+      "rel_x": 8,
+      "rel_y": 63,
+      "w_shrink": 16,
+      "h": 8,
+      "font_size": 4,
+      "font_family": "Noto Sans",
+      "bold": false
+    },
+    "cost": {
+      "rel_x": 8,
+      "rel_y": 71,
+      "w_shrink": 16,
+      "h": 10,
+      "font_size": 7,
+      "font_family": "Noto Sans",
+      "bold": true
+    },
+    "arr": {
+      "rel_x_from_cw": -5,
+      "rel_y": 39,
+      "w": 10,
+      "h": 8,
+      "font_size": 5,
+      "font_family": "Proxima Nova"
+    }
+  },
+  "3col": {
+    "_layout": {
+      "x0": 36,
+      "y0": 128,
+      "card_w": 206,
+      "gap": 12,
+      "card_h": 190
+    },
+    "col": {
+      "rel_x": 0,
+      "rel_y": 0,
+      "w": 206,
+      "h": 190
+    },
+    "cl": {
+      "rel_x": 18,
+      "rel_y": 20,
+      "w": 170,
+      "h": 12,
+      "font_size": 7,
+      "bold": true
+    },
+    "ct": {
+      "rel_x": 18,
+      "rel_y": 43,
+      "w": 170,
+      "h": 28,
+      "font_size": 14.5,
+      "font_family": "Noto Sans",
+      "bold": true
+    },
+    "it": {
+      "rel_x": 28,
+      "rel_y_base": 82,
+      "rel_y_step": 19,
+      "w": 162,
+      "h": 13,
+      "font_size": 7,
+      "font_family": "Noto Sans",
+      "bold": false
+    }
+  },
+  "kpi_dashboard": {
+    "_layout": {
+      "x0": 36,
+      "y0": 128,
+      "gap": 12,
+      "card_h": 128,
+      "_note": "card_w=(648 - gap*(n-1))/n, n=number of KPIs"
+    },
+    "kpi_label": {
+      "rel_x": 14,
+      "rel_y": 18,
+      "w_shrink": 28,
+      "h": 12,
+      "font_size": 6,
+      "font_family": "Noto Sans",
+      "bold": true
+    },
+    "kpi_value": {
+      "rel_x": 14,
+      "rel_y": 46,
+      "w_shrink": 28,
+      "h": 40,
+      "font_size": 26,
+      "font_family": "Proxima Nova",
+      "bold": true
+    },
+    "kpi_sub": {
+      "rel_x": 14,
+      "rel_y": 91,
+      "w_shrink": 28,
+      "h": 20,
+      "font_size": 7,
+      "font_family": "Noto Sans",
+      "bold": false
+    }
+  },
+  "quote": {
+    "quote_mark": {
+      "x": 80,
+      "y": 112,
+      "w": 80,
+      "h": 60,
+      "font_size": 80,
+      "font_family": "Proxima Nova",
+      "bold": true
+    },
+    "quote": {
+      "x": 80,
+      "y": 155,
+      "w": 560,
+      "h": 76,
+      "font_size": 24,
+      "font_family": "Noto Sans",
+      "bold": true
+    }
+  },
+  "contents": {
+    "_layout": {
+      "x0": 36,
+      "y0": 132,
+      "row_h": 46
+    },
+    "num": {
+      "rel_x": 0,
+      "rel_y": 0,
+      "w": 32,
+      "h": 18,
+      "font_size": 13,
+      "font_family": "Proxima Nova",
+      "bold": true
+    },
+    "ttl": {
+      "rel_x": 50,
+      "rel_y": 0,
+      "w": 220,
+      "h": 18,
+      "font_size": 12,
+      "font_family": "Noto Sans",
+      "bold": true
+    },
+    "desc": {
+      "rel_x": 280,
+      "rel_y": 1,
+      "w": 360,
+      "h": 16,
+      "font_size": 8,
+      "font_family": "Noto Sans",
+      "bold": false
+    }
+  }
+}
