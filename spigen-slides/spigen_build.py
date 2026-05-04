@@ -127,7 +127,7 @@ def _today_cover_date():
 COLORS = {
     "dark": {
         # 기본
-        "bg":            {"red": 0.102, "green": 0.102, "blue": 0.102},   # #1A1A1A
+        "bg":            {"red": 0, "green": 0, "blue": 0},               # #000000 (V6.3: 표지와 통일)
         "fg":            {"red": 0.894, "green": 0.894, "blue": 0.894},   # 88% 흰 합성 (#E4E4E4)
         "dim":           {"red": 0.769, "green": 0.769, "blue": 0.769},   # 74% (#C4C4C4)
         "fg_faint":      {"red": 0.604, "green": 0.604, "blue": 0.604},   # 56% (#9A9A9A)
@@ -584,10 +584,10 @@ class SpigenBuilder:
     def _style(self, oid, size, bold=False, color=None, italic=False, align="START", font_family="Noto Sans KR"):
         if color is None:
             color = self.c["fg"]
-        # V5.7: 8pt 본문(non-bold)에 line spacing 1.5 자동 적용
+        # V6.3: 9pt 본문(non-bold)에 line spacing 1.5 (150%) 자동 적용
         para_style = {"alignment": align}
         para_fields = "alignment"
-        if size == 8 and not bold:
+        if size == 9 and not bold:
             para_style["lineSpacing"] = 150
             para_fields += ",lineSpacing"
         self.reqs += [
@@ -1142,7 +1142,7 @@ class SpigenBuilder:
             fill = self.c["surface"]
             border = self.c["border"]
             border_w = 0.4
-            label_color = self.c["dim"]
+            label_color = self.c["accent"]  # V6.3: 카드 라벨(eyebrow) 항상 accent (full 제외)
             title_color = fg
             body_color = self.c["dim"]
         self._rect(sid, x, y, w, h, fill, border, border_w)
@@ -1160,7 +1160,7 @@ class SpigenBuilder:
                 bo = _uid()
                 self._shape(sid, bo, x + pad_x, y, w - pad_x * 2, h)
                 br = self._text_md(bo, body)
-                self._style(bo, 8, color=body_color)
+                self._style(bo, 9, color=body_color)
                 self._apply_bold_ranges(bo, br)
             elif label:
                 lo = _uid()
@@ -1189,7 +1189,7 @@ class SpigenBuilder:
             body_h = max(16, h - (body_y - y) - 14 - footer_h)
             self._shape(sid, bo, x + pad_x, body_y, w - pad_x * 2, body_h)
             br = self._text_md(bo, body)
-            self._style(bo, 8, color=body_color)
+            self._style(bo, 9, color=body_color)
             self._apply_bold_ranges(bo, br)
         # footer 섹션 (divider + label + body)
         if has_footer:
@@ -1244,7 +1244,7 @@ class SpigenBuilder:
             de = _uid()
             self._shape(sid, de, x + pad_x, y + 62, w - pad_x * 2, max(16, h - 76))
             self._text(de, desc)
-            self._style(de, 8, color=self.c["dim"])
+            self._style(de, 9, color=self.c["dim"])
 
     def compare_pair(self, y, item, before, after, h=44):
         """비교 행 1개 — mk_compare_rows 시트 비율(140:240:240) 사용.
@@ -1273,14 +1273,14 @@ class SpigenBuilder:
         bo = _uid()
         self._shape(sid, bo, bx + 12, y + v_pad, before_w - 24, text_h)
         self._text(bo, before)
-        self._style(bo, 8, color=self.c["dim"])
+        self._style(bo, 9, color=self.c["dim"])
         # after (우, accent_bg + 오렌지 border 0.5)
         ax = bx + before_w + gap
         self._rect(sid, ax, y, after_w, h, self.c["accent_bg"], self.c["accent"], 0.5)
         ao = _uid()
         self._shape(sid, ao, ax + 12, y + v_pad, after_w - 24, text_h)
         self._text(ao, after)
-        self._style(ao, 8, color=self.c["fg"])
+        self._style(ao, 9, color=self.c["fg"])
 
     def callout(self, text, sub=""):
         """단일 슬라이드 = 강조 메시지. 큰 글씨로 한 문장 + 부연 설명."""
@@ -1298,7 +1298,7 @@ class SpigenBuilder:
             so = _uid()
             self._shape(oid, so, 90, 210, 590, 50)
             self._text(so, sub)
-            self._style(so, 8, color=self.c["dim"])
+            self._style(so, 9, color=self.c["dim"])
         self._current_slide = oid
         return oid
 

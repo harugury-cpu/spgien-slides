@@ -126,7 +126,7 @@ FONT_HIERARCHY = {
     "title":         22,    # 슬라이드 헤더
     "metric":        56,    # 결론 페이지 큰 메시지
     "card_title":    10.5,  # 카드 / flow_step / compare_pair item / checklist 텍스트
-    "body":          8,     # 카드 body / flow desc / compare 본문 (line spacing 1.5 자동)
+    "body":          9,     # 카드 body / flow desc / compare 본문 (V6.3: 9pt + line spacing 1.5 자동)
     "label":         8,     # 카드 label / eyebrow (bold)
     "footnote":      7,     # 작은 sub / annotation
     "minimum":       6,     # 가장 작은 부가 정보

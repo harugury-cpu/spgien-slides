@@ -38,7 +38,7 @@ def c255(r, g, b):
 # 출처: Spigen Dark/Light Design System colors_and_type.css
 THEME_TOKENS = {
     "dark": {
-        "BG":         c255(26, 26, 26),       # #1A1A1A
+        "BG":         c255(0, 0, 0),          # #000000 (V6.3: 표지와 통일)
         "SURFACE":    c255(38, 38, 38),       # #262626 (★ V6.0: 14→38, 24% 밝게)
         "SURFACE_HI": c255(48, 48, 48),       # #303030
         "SURFACE_2":  c255(42, 42, 42),       # #2A2A2A
