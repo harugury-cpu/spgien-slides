@@ -1128,9 +1128,11 @@ class SpigenBuilder:
             fill = self.c["accent"]
             border = self.c["accent"]
             border_w = 0.5
-            label_color = {"red": 0, "green": 0, "blue": 0}
-            title_color = {"red": 0, "green": 0, "blue": 0}
-            body_color = {"red": 0.20, "green": 0.07, "blue": 0.02}
+            # V6.3.3: 풀 오렌지 카드 안 텍스트 = 테마 바탕색
+            #   dark → bg=#000000 (검정), light → bg=#FFFFFF (흰색)
+            label_color = self.c["bg"]
+            title_color = self.c["bg"]
+            body_color = self.c["bg"]
         elif emphasis == "dim":
             fill = self.c["accent_bg"]
             border = self.c["accent"]
