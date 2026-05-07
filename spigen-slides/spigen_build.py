@@ -118,7 +118,7 @@ def _uid():
 
 
 def _today_cover_date():
-    return datetime.now().strftime("%Y. %m. %d.")
+    return datetime.now().strftime("%Y.%m.%d")
 
 
 # V6.0: Spigen Design System 컬러 토큰 직접 동기화
@@ -1148,8 +1148,8 @@ class SpigenBuilder:
         self._rect(sid, x, y, w, h, fill, border, border_w)
         pad_x = 18
         sections = [s for s in (label, title, body) if s]
-        # 짧은 카드: 시트 표준이 안 맞음 → 카드 가득 채워 vertical-center
-        if h < 80 or len(sections) == 1:
+        # 소형 경로: h < 80 → 우선순위 단일 섹션 (title > body > label)
+        if h < 80:
             if title:
                 to = _uid()
                 self._shape(sid, to, x + pad_x, y, w - pad_x * 2, h)
@@ -1168,7 +1168,63 @@ class SpigenBuilder:
                 self._text(lo, str(label).upper())
                 self._style(lo, 8, bold=True, color=label_color)
             return
-        # 시트 표준 좌표 (h>=80, 2섹션 이상)
+        # 3섹션 미만 (h >= 80): 스택 배치 — 대형 고정 좌표 사용 안 함
+        if len(sections) < 3:
+            pad_v, gap = 16, 6
+            if label and title and not body:
+                lo = _uid()
+                self._shape(sid, lo, x + pad_x, y + pad_v, w - pad_x * 2, 12)
+                self._text(lo, str(label).upper())
+                self._style(lo, 8, bold=True, color=label_color)
+                to = _uid()
+                ty = y + pad_v + 12 + gap
+                self._shape(sid, to, x + pad_x, ty, w - pad_x * 2, max(16, h - (ty - y) - pad_v))
+                br = self._text_md(to, title)
+                self._style(to, 10.5, bold=True, color=title_color)
+                self._apply_bold_ranges(to, br)
+            elif title and body and not label:
+                to = _uid()
+                self._shape(sid, to, x + pad_x, y + pad_v, w - pad_x * 2, 20)
+                br = self._text_md(to, title)
+                self._style(to, 10.5, bold=True, color=title_color)
+                self._apply_bold_ranges(to, br)
+                bo = _uid()
+                by = y + pad_v + 20 + gap
+                self._shape(sid, bo, x + pad_x, by, w - pad_x * 2, max(16, h - (by - y) - pad_v))
+                br = self._text_md(bo, body)
+                self._style(bo, 9, color=body_color)
+                self._apply_bold_ranges(bo, br)
+            elif label and body and not title:
+                lo = _uid()
+                self._shape(sid, lo, x + pad_x, y + pad_v, w - pad_x * 2, 12)
+                self._text(lo, str(label).upper())
+                self._style(lo, 8, bold=True, color=label_color)
+                bo = _uid()
+                by = y + pad_v + 12 + gap
+                self._shape(sid, bo, x + pad_x, by, w - pad_x * 2, max(16, h - (by - y) - pad_v))
+                br = self._text_md(bo, body)
+                self._style(bo, 9, color=body_color)
+                self._apply_bold_ranges(bo, br)
+            else:  # 1섹션 (h >= 80): 카드 전체 채움
+                if title:
+                    to = _uid()
+                    self._shape(sid, to, x + pad_x, y, w - pad_x * 2, h)
+                    br = self._text_md(to, title)
+                    self._style(to, 10.5, bold=True, color=title_color)
+                    self._apply_bold_ranges(to, br)
+                elif body:
+                    bo = _uid()
+                    self._shape(sid, bo, x + pad_x, y, w - pad_x * 2, h)
+                    br = self._text_md(bo, body)
+                    self._style(bo, 9, color=body_color)
+                    self._apply_bold_ranges(bo, br)
+                elif label:
+                    lo = _uid()
+                    self._shape(sid, lo, x + pad_x, y, w - pad_x * 2, h)
+                    self._text(lo, str(label).upper())
+                    self._style(lo, 8, bold=True, color=label_color)
+            return
+        # 3섹션 대형 카드 (h >= 80, label+title+body 모두 있음): 시트 표준 고정 좌표
         # footer 사용 시 본문 영역 줄임
         has_footer = bool(footer_label or footer_body)
         footer_h = 56 if has_footer else 0

@@ -5,7 +5,7 @@ license: MIT
 metadata:
   category: productivity
   locale: ko-KR
-  phase: v6.1.1
+  phase: v6.3.2
 ---
 
 # spigen-slides
@@ -22,6 +22,7 @@ metadata:
 - 기본 생성 모드는 **운영용 = 디테일용 = 보고서형** 하나다.
 - 각 슬라이드는 **한 페이지 자기완결 설명**을 우선한다. 발표용 희소 카피보다 읽고 바로 실행 가능한 설명을 우선한다.
 - **표지는 직접 그리지 않는다.** light / dark 모두 지정 템플릿 cover를 복사하고 텍스트만 교체한다.
+- **80/20 소울 원칙**: 80%는 토큰·컴포넌트 규칙 준수, 20%는 이 덱만의 차별점 1가지. 이 덱 스크린샷을 Spigen 팀원이 보면 어떤 프로젝트인지 알 수 있어야 완성이다. 차별점 후보: 핵심 수치를 `callout()`으로 배치, 내용 구조에 맞는 비대칭 레이아웃, 원본 데이터를 직접 담은 수치 강조.
 
 ---
 
@@ -30,7 +31,7 @@ metadata:
 - 담당자: `한원진 담당`
 - 부서: `디자인부문ㅣ패키지디자인팀`
 - 오렌지: `#FF6B1A`
-- dark 배경: `#1C1C1E` / 텍스트: `#FFFFFF`
+- dark 배경: `#000000` / 텍스트: `#FFFFFF` (다크 표지와 통일)
 - light 배경: `#FFFFFF` / 텍스트: `#1C1C1E`
 - 빌더: `~/.agents/skills/spigen-slides/spigen_build.py`
 
@@ -72,10 +73,13 @@ Q2. 청중은 누구인가요?
 Q3. 전달할 핵심 내용을 적어주세요.
     형식 무관 — 글머리, 메모, 키워드 나열 모두 가능
 
-Q4. 테마: 생략 가능 (기본 = light, 필요 시 dark)
+Q4. 테마: dark / light 중 선택 (기본 dark)
+    "다크" "라이트" "어두운" "밝은" 같은 한국어 표현도 인식. 사용자가 언급 없이
+    PPT 만들기를 요청한 경우 이 질문을 명시적으로 묻고 답을 받은 뒤 진행한다.
 ```
 
-테마를 따로 지정하지 않으면 **light를 기본값**으로 사용한다.
+테마를 따로 지정하지 않으면 **dark를 기본값**으로 사용하되, 사용자에게
+Q4를 명시적으로 묻는 것을 권장한다 (Step 1.5 강제 규칙과 일치).
 
 ### 기본 생성 모드
 
@@ -129,7 +133,7 @@ Step 2 진입 전 아래를 내부적으로 수행한다. 사용자에게 출력
 - **클로징 없음**: 마지막은 콘텐츠 슬라이드로 끝낸다.
 - **기본 테마: dark** — `theme="dark"` 가 default. light는 사용자가 "라이트로", "light theme" 같이 명시 요청 시에만 사용.
 - **표지 제목 2줄 이내**: `cover(title=...)` 의 `\n` 개수 1개 이하. 3줄 이상 시 자동 트림 + 경고.
-- **표지 날짜 자동 반영**: `cover()`의 `date`를 생략하면 생성 시점의 오늘 날짜를 `yyyy. mm. dd.` 형식으로 자동 입력한다. 사용자가 특정 날짜를 명시한 경우에만 `date="..."`를 넘긴다.
+- **표지 날짜 자동 반영**: `cover()`의 `date`를 생략하면 생성 시점의 오늘 날짜를 `yyyy.mm.dd` 형식(공백 없음, 좁은 텍스트박스에서 줄바꿈 방지)으로 자동 입력한다. 사용자가 특정 날짜를 명시한 경우에만 `date="..."`를 넘긴다.
 - **테마 선택**: `theme="light"` 또는 `theme="dark"` — 각각 별도 지정 템플릿 cover 사용.
 - **light cover 기준**: KPI 라이트 템플릿 `1BBG9PR6ZBsEABbJLhbUUfRMkgGYQtNMOWAmLQgPhr70`
 - **dark cover 기준**: 다크 가이드 템플릿 `1HJbTWXPCr38gXDQuarglSLrkheDQXAojlrYUKcfVgAc`
@@ -170,9 +174,10 @@ Step 2 진입 전 아래를 내부적으로 수행한다. 사용자에게 출력
 b.start_slide(heading="슬라이드 제목", eyebrow="CATEGORY")
 
 # 카드 — emphasis 옵션:
-#   None / 미지정 : 일반 (surface + border)
+#   None / 미지정 : 일반 (surface + border, 라벨 = accent 오렌지 항상)
 #   "dim"         : 약한 강조 (accent_bg + accent border)
 #   "full"        : 풀 ORANGE 배경 + 검정 텍스트 (★ 한 슬라이드 1개만 허용)
+# 본문(card body / flow desc / compare 본문) = 9pt + line spacing 1.5 (코드 토큰 자동 적용)
 b.card(x=40, y=110, w=200, h=120, label="01", title="제목",
        body="본문 (**굵게** 마크업 자동)", emphasis=None)
 
@@ -259,6 +264,8 @@ lib.mk_decision_tree(oid, nodes={
 - bullet: 1줄 이내, 슬라이드당 3줄 이하
 - 수치가 있으면 수치 먼저, 설명은 다음
 - AI 클리셰 없음: 혁신적인·원활한·극대화·시너지·솔루션·최적화 → 구체 수치·사실로 대체
+- **수치 위조 금지**: "10배 향상", "99% 정확도", "3배 효율" 등 원본에 없는 수치·퍼센트·배율은 절대 사용 금지. AI 클리셰보다 더 위험한 패턴. 수치가 없으면 수치 없이 쓰거나 슬라이드를 줄인다.
+- **플레이스홀더 금지**: 내용이 없는 슬라이드를 "추가 예정", "내용 입력", 빈 카드로 채우지 않는다. 채울 내용이 없으면 슬라이드를 제거한다.
 - 원본에 없는 내용 추가 없음
 
 ---
@@ -430,6 +437,7 @@ python3 /tmp/build_<name>.py
 - ❌ 검정 배경 위 어두운 오렌지·갈색 톤 텍스트
 - ❌ 긴 본문이나 보조 설명을 오렌지 계열 색으로 표기 — 오렌지는 강조 전용
 - ❌ `ACCENT_DIM`을 텍스트 색으로 사용 (배경 fill 전용)
+- ❌ **슬라이드당 오렌지(accent) 가시적 사용 2회 초과** — eyebrow 오렌지 + 강조 카드 1개가 정석 쌍. 오렌지 구분선 + 오렌지 카드 테두리 + 오렌지 eyebrow + 풀카드가 동시에 있으면 accent가 희석된다. 슬라이드당 2회를 목표로, 3회 이상이면 우선순위가 낮은 것부터 제거한다.
 
 ### 2. 강조 카드 사용 제한
 - ❌ 한 슬라이드에 풀 ORANGE 강조 카드 (`emphasis="full"`) **2개 이상**
@@ -455,9 +463,13 @@ python3 /tmp/build_<name>.py
 ### 5. 타이포·콘텐츠
 - ❌ Noto Sans / Pretendard / Proxima Nova 외 폰트
 - ❌ AI 클리셰 — 혁신적인·원활한·극대화·시너지·솔루션·최적화·스마트한·강력한·게임체인저
+- ❌ **원본에 없는 수치·퍼센트·배율 사용** — "10배 향상", "99% 정확도", "3배 효율" 등 AI가 만들어낸 수치. 근거 없는 수치는 AI-slop의 핵심 지표. 수치가 없으면 수치 없이 쓴다.
+- ❌ **플레이스홀더 문구** — "추가 예정", "내용 입력", 빈 카드. 채울 내용이 없으면 슬라이드를 제거한다.
 - ❌ 함수명 / 파일명 / 변수명 직접 기재 (`mk_flow()`, `spigen_lib.py` 등)
 - ❌ 사내 약어·코드명 슬라이드 표기 (외부 청중인 경우)
 - ❌ Gradient text / 장식용 glassmorphism 기본 적용
+- ❌ **ALL CAPS 텍스트에 자간 미적용** — eyebrow 라벨("STATUS", "ACTION PLAN", "WORKFLOW" 등)은 대문자이므로 자간 0.06em 이상 필수. 자간 없는 대문자는 글자가 붙어 보이며 craft 실패의 가장 쉬운 식별 지표. (빌더가 강제 적용하지 않는 경우 token 확인)
+- ❌ **대형 헤더(34pt+)에 자간 미처리** — 표지 제목(34pt)·section_divider 숫자(100pt)는 자간 -0.01em~-0.03em 적용해야 글자가 뭉쳐 보이지 않음. 빌더 토큰 미반영 시 직접 명시.
 
 ### 6. 위계·리듬
 - ❌ Hierarchy 평평한 구성 (모든 카드가 같은 강도)
@@ -514,5 +526,6 @@ python3 /tmp/build_<name>.py
 | `spigen_planning.md` | Step 1~2 기획 가이드 |
 | `spigen_execution.md` | Step 3 실행 코드 템플릿 |
 | `spigen_component_gallery.md` | 컴포넌트 인벤토리 |
+| `~/.claude/skills/craft-design-rules.md` | 범용 디자인 craft 규칙 (Anti-AI-Slop / 자간 / 색상 규율 / 80/20 소울 원칙) — 다른 디자인 스킬에서도 참조 |
 
 > 디자인 룰은 빌더 코드(`spigen_build.py` / `spigen_lib.py` / `spigen_tokens.py`)가 자동 강제. 코드로 못 잡는 텍스트·메시지·청중 차원 룰은 별도 `spigen-slides-review` 스킬의 페르소나 영역 매트릭스에서 검수한다.
