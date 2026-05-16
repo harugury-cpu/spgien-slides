@@ -42,8 +42,9 @@ metadata:
 ```
 Step 1. 내용 수집
 Step 2. 슬라이드 구성 제안 → 사용자 승인
-Step 3. 생성 + 링크 공유
-Step 4. 검증 실행 여부 질문
+Step 3. Preflight Gate 통과
+Step 4. 생성 + 링크 공유
+Step 5. 검증 실행 여부 질문
 ```
 
 ---
@@ -307,7 +308,59 @@ lib.mk_decision_tree(oid, nodes={
 
 ---
 
-## Step 3. 생성
+## Step 3. Preflight Gate
+
+생성 스크립트를 작성하기 전에 반드시 `/tmp/spigen_plan_<BUILD_NAME>.json`을 만들고
+`spigen_preflight.py`를 실행한다.
+
+목적:
+- 자료 목적 → 섹션 구조 → 슬라이드 역할 → 컴포넌트 선택 순서를 강제한다.
+- 구조 설명을 카드로 압축하거나, 논의 항목을 카드로 만드는 실수를 막는다.
+- 7장 이상 덱에서 섹션 구분 없이 슬라이드를 나열하는 실수를 막는다.
+
+필수 JSON 형식:
+
+```json
+{
+  "purpose": "운영 구조 설명",
+  "audience": "프로젝트 참여자",
+  "mode": "operational_detail_report",
+  "sections": [
+    {
+      "title": "현재 구조",
+      "slides": [
+        {"title": "전체 구조", "role": "structure", "component": "diagram"}
+      ]
+    },
+    {
+      "title": "추가 논의 항목",
+      "slides": [
+        {"title": "논의 항목 1", "role": "agenda", "component": "numbered_text"}
+      ]
+    }
+  ]
+}
+```
+
+실행:
+
+```bash
+python3 ~/.agents/skills/spigen-slides/spigen_preflight.py /tmp/spigen_plan_<BUILD_NAME>.json
+```
+
+실패 시:
+- 빌드하지 않는다.
+- 섹션, role, component를 수정한 뒤 다시 실행한다.
+
+특히 아래는 실패로 본다:
+- 7장 이상인데 섹션이 2개 미만
+- 논의 항목을 card / 3col_cards로 구성
+- 구조 설명을 diagram / flow / arch 계열이 아닌 카드 위주로 구성
+- 작동 방식을 flow / diagram 계열이 아닌 카드 위주로 구성
+
+---
+
+## Step 4. 생성
 
 승인된 구성대로 Python 빌드 스크립트를 작성하고 실행한다.
 

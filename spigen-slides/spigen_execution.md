@@ -1,8 +1,21 @@
 # spigen-slides Execution Guide (v6)
 
-## Step 3. 생성
+## Step 3. Preflight Gate + 생성
 
-승인된 구성을 그대로 Python 빌드 스크립트로 변환하고 실행한다.
+빌드 스크립트 작성 전 반드시 계획 JSON을 만들고 preflight를 통과시킨다.
+
+```bash
+python3 ~/.agents/skills/spigen-slides/spigen_preflight.py /tmp/spigen_plan_<BUILD_NAME>.json
+```
+
+실패하면 생성하지 않는다. 특히 아래 케이스는 preflight에서 막는다.
+
+- 7장 이상인데 섹션 구분이 없음
+- 구조 설명을 카드 위주로 구성
+- 작동 방식을 다이어그램/플로우가 아니라 카드 위주로 구성
+- 논의 항목을 번호형 텍스트가 아니라 카드로 구성
+
+preflight 통과 후 승인된 구성을 그대로 Python 빌드 스크립트로 변환하고 실행한다.
 
 v6 기본 방향:
 - 운영용 = 디테일용 = 보고서형
